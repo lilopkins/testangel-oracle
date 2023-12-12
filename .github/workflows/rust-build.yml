@@ -55,11 +55,12 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             target/release/libtestangel_oracle.so
             target/release/testangel_oracle.dll
             target/release/libtestangel_oracle.dylib
+          tag_name: ${{ needs.create-release.outputs.CARGO_PKG_VERSION }}
+          prerelease: ${{ needs.create-release.outputs.CARGO_PKG_PRERELEASE }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
