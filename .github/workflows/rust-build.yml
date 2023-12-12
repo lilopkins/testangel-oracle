@@ -1,0 +1,64 @@
+name: Build Rust Applications
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    outputs:
+      CARGO_PKG_VERSION: ${{ steps.version.outputs.CARGO_PKG_VERSION }}
+      CARGO_PKG_PRERELEASE: ${{ steps.version.outputs.CARGO_PKG_PRERELEASE }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Determine Cargo version
+        id: version
+        run: |
+          export CARGO_PKG_VERSION=$(awk -F '["=]' '/^\[(workspace.)?package\]/{p=1} p && /^version[[:space:]]*=/ {gsub(/"/, "", $3); print $3; p=0}' Cargo.toml)
+          export CARGO_PKG_PRERELEASE=$([[ $CARGO_PKG_VERSION =~ -[0-9A-Za-z]+ ]] && echo "true" || echo "false")
+          echo "CARGO_PKG_VERSION=${CARGO_PKG_VERSION}" >> $GITHUB_OUTPUT
+          echo "CARGO_PKG_PRERELEASE=${CARGO_PKG_PRERELEASE}" >> $GITHUB_OUTPUT
+      - name: Create Tag and Release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.CARGO_PKG_VERSION }}
+          release_name: v${{ steps.version.outputs.CARGO_PKG_VERSION }}
+          prerelease: ${{ steps.version.outputs.CARGO_PKG_PRERELEASE }}
+
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu, windows, macos]
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
+    permissions: write-all
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Install latest rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build
+        run: cargo build --release
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            target/release/libtestangel_oracle.so
+            target/release/testangel_oracle.dll
+            target/release/libtestangel_oracle.dylib
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
