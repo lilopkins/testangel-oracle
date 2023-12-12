@@ -39,6 +39,7 @@ jobs:
       matrix:
         os: [ubuntu, windows, macos]
     name: Build on ${{ matrix.os }}
+    needs: create-release
     runs-on: ${{ matrix.os }}-latest
     permissions: write-all
 
