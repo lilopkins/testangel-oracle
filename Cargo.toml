@@ -1,6 +1,6 @@
 [package]
 name = "testangel-oracle"
-version = "0.1.0"
+version = "0.2.0-rc.1"
 edition = "2021"
 authors = [ "Lily Hopkins <lily@hpkns.uk>" ]
 description = "TestAngel engine for Oracle SQL automation."
@@ -12,5 +12,5 @@ crate-type = [ "cdylib" ]
 [dependencies]
 lazy_static = "1.4.0"
 oracle = "0.5.7"
-testangel-engine = { git = "https://github.com/lilopkins/testangel.git" }
+testangel-engine = { git = "https://github.com/lilopkins/testangel.git", branch = "next" }
 thiserror = "1.0.50"
