@@ -32,10 +32,10 @@ pub enum EngineError {
 
 lazy_static! {
     static ref ENGINE: Mutex<Engine<'static, Mutex<State>>> = Mutex::new(
-        Engine::new("Oracle SQL", env!("CARGO_PKG_VERSION"))
+        Engine::new("Oracle SQL", "OracleDB", env!("CARGO_PKG_VERSION"))
         /* Connect */
         .with_instruction(
-            Instruction::new("oracle-connect", "Connect", "Connect to an Oracle SQL server.")
+            Instruction::new("oracle-connect", "Connect", "Connect", "Connect to an Oracle SQL server.")
                 .with_parameter("username", "Username", ParameterKind::String)
                 .with_parameter("password", "Password", ParameterKind::String)
                 .with_parameter("connect_string", "Connection String", ParameterKind::String),
@@ -53,7 +53,7 @@ lazy_static! {
 
         /* Add Parameters */
         .with_instruction(
-            Instruction::new("oracle-query-add-parameter-string", "Add Query Parameter: String", "Add a parameter to be used later in a query.")
+            Instruction::new("oracle-query-add-parameter-string", "AddQueryParameterString", "Add Query Parameter: String", "Add a parameter to be used later in a query.")
                 .with_parameter("sql_param", "Parameter Value", ParameterKind::String),
             |state: &mut Mutex<State>, params, _output, _evidence| {
                 let state = state.get_mut().map_err(|_| EngineError::PoisonedState)?;
@@ -65,7 +65,7 @@ lazy_static! {
             }
         )
         .with_instruction(
-            Instruction::new("oracle-query-add-parameter-integer", "Add Query Parameter: Integer", "Add a parameter to be used later in a query.")
+            Instruction::new("oracle-query-add-parameter-integer", "AddQueryParameterInteger", "Add Query Parameter: Integer", "Add a parameter to be used later in a query.")
                 .with_parameter("sql_param", "Parameter Value", ParameterKind::Integer),
             |state: &mut Mutex<State>, params, _output, _evidence| {
                 let state = state.get_mut().map_err(|_| EngineError::PoisonedState)?;
@@ -77,7 +77,7 @@ lazy_static! {
             }
         )
         .with_instruction(
-            Instruction::new("oracle-query-add-parameter-boolean", "Add Query Parameter: Boolean", "Add a parameter to be used later in a query.")
+            Instruction::new("oracle-query-add-parameter-boolean", "AddQueryParameterBoolean", "Add Query Parameter: Boolean", "Add a parameter to be used later in a query.")
                 .with_parameter("sql_param", "Parameter Value", ParameterKind::Boolean),
             |state: &mut Mutex<State>, params, _output, _evidence| {
                 let state = state.get_mut().map_err(|_| EngineError::PoisonedState)?;
@@ -91,7 +91,7 @@ lazy_static! {
 
         /* Run Query */
         .with_instruction(
-            Instruction::new("oracle-query", "Execute Query", "Execute a query. If the query contains dangerous words, you must allow dangerous queries.")
+            Instruction::new("oracle-query", "ExecuteQuery", "Execute Query", "Execute a query. If the query contains dangerous words, you must allow dangerous queries.")
                 .with_parameter("query", "Query", ParameterKind::String)
                 .with_parameter("dangerous", "Allow Dangerous Queries", ParameterKind::Boolean),
             |state: &mut Mutex<State>, params, _output, evidence| {
@@ -130,7 +130,7 @@ lazy_static! {
             }
         )
         .with_instruction(
-            Instruction::new("oracle-query-with-string-result", "Execute Query with String Result", "Execute a query. If the query contains dangerous words, you must allow dangerous queries.")
+            Instruction::new("oracle-query-with-string-result", "ExecuteQueryWithStringResult", "Execute Query with String Result", "Execute a query. If the query contains dangerous words, you must allow dangerous queries.")
                 .with_parameter("query", "Query", ParameterKind::String)
                 .with_parameter("column", "Return Column", ParameterKind::String)
                 .with_parameter("dangerous", "Allow Dangerous Queries", ParameterKind::Boolean)
@@ -173,7 +173,7 @@ lazy_static! {
             }
         )
         .with_instruction(
-            Instruction::new("oracle-query-with-integer-result", "Execute Query with Integer Result", "Execute a query. If the query contains dangerous words, you must allow dangerous queries.")
+            Instruction::new("oracle-query-with-integer-result", "ExecuteQueryWithIntegerResult", "Execute Query with Integer Result", "Execute a query. If the query contains dangerous words, you must allow dangerous queries.")
                 .with_parameter("query", "Query", ParameterKind::String)
                 .with_parameter("column", "Return Column", ParameterKind::Integer)
                 .with_parameter("dangerous", "Allow Dangerous Queries", ParameterKind::Boolean)
