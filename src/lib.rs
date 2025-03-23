@@ -1,7 +1,7 @@
 #![warn(clippy::pedantic)]
 
 use oracle::{sql_type::ToSql, Connection};
-use testangel_engine::{Evidence, EvidenceContent, engine};
+use testangel_engine::{engine, Evidence, EvidenceContent};
 use thiserror::Error;
 
 #[derive(Clone)]
@@ -40,8 +40,8 @@ engine! {
         /// Connect to an Oracle SQL server.
         #[instruction(
             id = "oracle-connect",
-            name = "Connect",
             lua_name = "Connect",
+            name = "Connect",
             flags = InstructionFlags::AUTOMATIC,
         )]
         fn connect(
@@ -58,8 +58,8 @@ engine! {
         /// Add a parameter to be used later in a query.
         #[instruction(
             id = "oracle-query-add-parameter-string",
-            name = "AddQueryParameterString",
-            lua_name = "Add Query Parameter: String",
+            lua_name = "AddQueryParameterString",
+            name = "Add Query Parameter: String",
             flags = InstructionFlags::INFALLIBLE | InstructionFlags::AUTOMATIC,
         )]
         fn add_parameter_string(
@@ -73,8 +73,8 @@ engine! {
         /// Add a parameter to be used later in a query.
         #[instruction(
             id = "oracle-query-add-parameter-integer",
-            name = "AddQueryParameterInteger",
-            lua_name = "Add Query Parameter: Integer",
+            lua_name = "AddQueryParameterInteger",
+            name = "Add Query Parameter: Integer",
             flags = InstructionFlags::INFALLIBLE | InstructionFlags::AUTOMATIC,
         )]
         fn add_parameter_int(
@@ -88,8 +88,8 @@ engine! {
         /// Add a parameter to be used later in a query.
         #[instruction(
             id = "oracle-query-add-parameter-boolean",
-            name = "AddQueryParameterBoolean",
-            lua_name = "Add Query Parameter: Boolean",
+            lua_name = "AddQueryParameterBoolean",
+            name = "Add Query Parameter: Boolean",
             flags = InstructionFlags::INFALLIBLE | InstructionFlags::AUTOMATIC,
         )]
         fn add_parameter_bool(
@@ -104,8 +104,8 @@ engine! {
         /// Execute a query. If the query contains dangerous words, you must allow dangerous queries.
         #[instruction(
             id = "oracle-query",
-            name = "ExecuteQuery",
-            lua_name = "Execute Query",
+            lua_name = "ExecuteQuery",
+            name = "Execute Query",
             flags = InstructionFlags::AUTOMATIC,
         )]
         fn query(
@@ -143,8 +143,8 @@ engine! {
         /// Execute a query. If the query contains dangerous words, you must allow dangerous queries.
         #[instruction(
             id = "oracle-query-with-string-result",
-            name = "ExecuteQueryWithStringResult",
-            lua_name = "Execute Query with String Result",
+            lua_name = "ExecuteQueryWithStringResult",
+            name = "Execute Query with String Result",
             flags = InstructionFlags::AUTOMATIC,
         )]
         fn query_with_string_result(
@@ -187,8 +187,8 @@ engine! {
         /// Execute a query. If the query contains dangerous words, you must allow dangerous queries.
         #[instruction(
             id = "oracle-query-with-integer-result",
-            name = "ExecuteQueryWithIntegerResult",
-            lua_name = "Execute Query with Integer Result",
+            lua_name = "ExecuteQueryWithIntegerResult",
+            name = "Execute Query with Integer Result",
             flags = InstructionFlags::AUTOMATIC,
         )]
         fn query_with_integer_result(
