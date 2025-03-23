@@ -1,7 +1,7 @@
 #![warn(clippy::pedantic)]
 
 use oracle::{sql_type::ToSql, Connection};
-use testangel_engine::{Evidence, EvidenceContent, engine};
+use testangel_engine::{engine, Evidence, EvidenceContent};
 use thiserror::Error;
 
 #[derive(Clone)]
