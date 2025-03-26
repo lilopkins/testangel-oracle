@@ -1,6 +1,6 @@
 [package]
 name = "testangel-oracle"
-version = "0.2.0-rc.1"
+version = "0.3.0"
 edition = "2021"
 authors = [ "Lily Hopkins <lily@hpkns.uk>" ]
 description = "TestAngel engine for Oracle SQL automation."
@@ -10,7 +10,7 @@ description = "TestAngel engine for Oracle SQL automation."
 crate-type = [ "cdylib" ]
 
 [dependencies]
-lazy_static = "1.4.0"
-oracle = "0.5.7"
-testangel-engine = { git = "https://github.com/lilopkins/testangel.git", branch = "next" }
-thiserror = "1.0.50"
+dynamic-plugin = { version = "0.6.0", features = ["client"] }
+oracle = "0.6.3"
+testangel-engine = { version = "1.0.0", git = "https://github.com/lilopkins/testangel.git", branch = "next" }
+thiserror = "2.0"
